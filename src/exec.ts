@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import fs from "fs";
 import openapiTs from "openapi-typescript";
 import path from "path";
@@ -20,15 +19,15 @@ export const exec = async () => {
 
     try {
       const swagger = await load(source);
-      const dts = await openapiTs(source);
-      fs.writeFileSync(outputTo + `/${mod}DTS.ts`, dts);
-      const api = await tpl(swagger, mod);
-      fs.writeFileSync(outputTo + `/${mod}.ts`, api);
       indexes.push(`export * as ${mod} from "./${mod}.ts";`);
+      const dts = await openapiTs(source);
+      fs.writeFileSync(path.join(outputTo, `/${mod}DTS.ts`), dts);
+      const api = await tpl(swagger, mod);
+      fs.writeFileSync(path.join(outputTo, `/${mod}.ts`), api);
     } catch (error) {
-      chalk.red("APICAST ERROR AT ", mod, "\n", error);
+      console.log("[APICAST ERROR] AT ", mod, "\n", error);
       console.trace(error);
     }
   });
-  fs.writeFileSync(outputTo + `/index.ts`, indexes.join("\n"));
+  fs.writeFileSync(path.join(outputTo, `/index.ts`), indexes.join("\n"));
 };
