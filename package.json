@@ -1,0 +1,19 @@
+{
+  "name": "apicast",
+  "version": "1.0.0",
+  "description": "",
+  "bin": "index.js",
+  "types": "src/index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "openapi-typescript": "5.x",
+    "tsx": "^3.12.7"
+  },
+  "devDependencies": {
+    "dprint": "^0.36.1"
+  }
+}
