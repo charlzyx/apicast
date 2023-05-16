@@ -13,13 +13,10 @@ export const exec = async () => {
     fs.mkdirSync(outputTo, { recursive: true });
   }
 
-  const indexes = [""];
   Object.keys(input).forEach(async (mod) => {
     const source = input[mod];
-
     try {
       const swagger = await load(source);
-      indexes.push(`export * as ${mod} from "./${mod}.ts";`);
       const dts = await openapiTs(source);
       fs.writeFileSync(path.join(outputTo, `/${mod}DTS.ts`), dts);
       const api = await tpl(swagger, mod);
@@ -29,5 +26,8 @@ export const exec = async () => {
       console.trace(error);
     }
   });
+
+  const indexes = Object.keys(input).map((mod) => `export * as ${mod} from "./${mod}.ts";`);
+
   fs.writeFileSync(path.join(outputTo, `/index.ts`), indexes.join("\n"));
 };
