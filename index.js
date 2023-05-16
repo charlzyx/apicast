@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const spawn = require("child_process").spawn;
+const path = require("path");
 
 const tsx = (command) => {
   const [filePath, ...others] = command.split(" ");
@@ -12,4 +13,4 @@ const tsx = (command) => {
   });
 };
 
-tsx("./exec");
+tsx("./bin");
