@@ -1,9 +1,10 @@
 {
   "name": "apicast",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "bin": "index.js",
   "types": "src/index.ts",
+  "main": "src/index.ts",
   "scripts": {},
   "keywords": [],
   "author": "",
