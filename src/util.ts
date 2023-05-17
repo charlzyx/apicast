@@ -83,8 +83,32 @@ const toUpperFirstLetter = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-export const makeNameByUrl = (url: string, requestType: string) => {
-  const currUrl = url.slice(0).match(/([^\.]+)/)?.[0] || "";
+export function getMaxSamePath(paths: string[], samePath = "") {
+  if (!paths.length) {
+    return samePath;
+  }
+
+  if (paths.some((path) => !path.includes("/"))) {
+    return samePath;
+  }
+
+  const segs = paths.map((path) => {
+    const [firstSeg, ...restSegs] = path.split("/");
+    return { firstSeg, restSegs };
+  });
+
+  if (segs.every((seg, index) => index === 0 || seg.firstSeg === segs[index - 1].firstSeg)) {
+    return getMaxSamePath(
+      segs.map((seg) => seg.restSegs.join("/")),
+      samePath + "/" + segs[0].firstSeg,
+    );
+  }
+
+  return samePath;
+}
+
+export const makeNameByUrl = (url: string, requestType: string, samePath = "") => {
+  const currUrl = url.slice(samePath.length).match(/([^\.]+)/)?.[0] || "";
 
   return (
     requestType
