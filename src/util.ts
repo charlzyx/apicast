@@ -19,6 +19,7 @@ export const where = (operation: PickItem<SwaggerV2["paths"]>) => {
     return mapping;
   }, {} as Record<string, boolean>);
   return map as {
+    path?: boolean;
     query?: boolean;
     body?: boolean;
     formData?: boolean;
@@ -69,6 +70,7 @@ export const byTags = (data: SwaggerV2) => {
 
 export const typingsOf = (path: string, operation: string) => {
   return {
+    path: `paths["${path}"]["${operation}"]["parameters"]["path"]`,
     query: `paths["${path}"]["${operation}"]["parameters"]["query"]`,
     body: `paths["${path}"]["${operation}"]["parameters"]["body"]`,
     formData: `paths["${path}"]["${operation}"]["parameters"]["formData"]`,
@@ -83,7 +85,7 @@ const toUpperFirstLetter = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-export function getMaxSamePath(paths: string[], samePath = "") {
+export const getMaxSamePath = (paths: string[], samePath = "") => {
   if (!paths.length) {
     return samePath;
   }
@@ -105,7 +107,7 @@ export function getMaxSamePath(paths: string[], samePath = "") {
   }
 
   return samePath;
-}
+};
 
 export const makeNameByUrl = (url: string, requestType: string, samePath = "") => {
   const currUrl = url.slice(samePath.length).match(/([^\.]+)/)?.[0] || "";
