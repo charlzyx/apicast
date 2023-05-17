@@ -1,6 +1,6 @@
 {
   "name": "apicast",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "bin": "index.js",
   "types": "src/index.ts",

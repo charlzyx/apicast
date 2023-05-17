@@ -27,7 +27,7 @@ export const exec = async () => {
     }
   });
 
-  const indexes = Object.keys(input).map((mod) => `export * as ${mod} from "./${mod}.ts";`);
+  const indexes = Object.keys(input).map((mod) => `export * as ${mod} from "./${mod}";`);
 
   fs.writeFileSync(path.join(outputTo, `/index.ts`), indexes.join("\n"));
 };
